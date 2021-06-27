@@ -17,22 +17,29 @@ public class Sudoko {
 			for(int i = 0;i<=8;i++) {
 				//Generates all values in a column
 				for(int k = j; k >= 0;k = k - 9) {
-					colContain.add(soduko[8 - i + k]);
+					if(!(soduko[8 - i + k] == 0))
+						colContain.add(soduko[8 - i + k]);
 				}
-				boolean positionEmpty = true;
-				//Adds an non-existant value to column + row.
-				int i1 = 0;
-				while(positionEmpty) {
-
-					if(!colContain.contains(row.rNumbers.get(i1))) {
-							soduko[8 - i + j] = row.rNumbers.get(i);
-							positionEmpty = false;
+				if(colContain.isEmpty()) {
+					soduko[8 - i + j] = row.rNumbers.get(i);
+				}
+				else {
+					int p = 0;
+					boolean temp = true;
+					while(temp && row.rNumbers.size() > p) {
+						if(!colContain.contains(row.rNumbers.get(p))) {
+							soduko[8 - i + j] = row.rNumbers.get(p);
+							row.rNumbers.remove(p);
+							temp = false;
 						}
-
-					else
-						i1++;
+						else
+							p++;
+					}
 				}
+				
 				colContain.clear();
+				
+				
 			}
 		}
 		
